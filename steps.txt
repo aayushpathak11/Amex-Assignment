@@ -11,4 +11,5 @@ step 2 - preprocessing
     - This rule based cleaning is important , and since it is one time ingestion process, we can apply this approach, as better and more cleaned the data better the results of later RAG pipeline.
     - applied chunking recursive character text splitter using langchain, tried different configurations of chunk sizes and overlap
     - https://python.langchain.com/docs/concepts/text_splitters/
+    - future changes - passing file paths as list for more robustness
     

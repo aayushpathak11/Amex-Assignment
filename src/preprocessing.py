@@ -86,14 +86,15 @@ def cleaning(file_path1,file_path2,file_path3,file_path4):
     cleaned_docs1 = []
     cleaned_docs2 = []
     cleaned_docs3 = []
+    cleaned_docs4 = []
     for doc in docs1:
-        cleaned_docs.append(Document(page_content=clean_text1(doc.page_content), metadata=doc.metadata))
+        cleaned_docs1.append(Document(page_content=clean_text1(doc.page_content), metadata=doc.metadata))
     for doc in docs2:
-        cleaned_docs.append(Document(page_content=clean_text2(doc.page_content), metadata=doc.metadata))
+        cleaned_docs2.append(Document(page_content=clean_text2(doc.page_content), metadata=doc.metadata))
     for doc in docs3:
-        cleaned_docs.append(Document(page_content=clean_text3(doc.page_content), metadata=doc.metadata))
+        cleaned_docs3.append(Document(page_content=clean_text3(doc.page_content), metadata=doc.metadata))
     for doc in docs4:
-        cleaned_docs.append(Document(page_content=clean_text4(doc.page_content), metadata=doc.metadata))
+        cleaned_docs4.append(Document(page_content=clean_text4(doc.page_content), metadata=doc.metadata))
     return cleaned_docs1,cleaned_docs2,cleaned_docs3,cleaned_docs4
 
 def chunking(cleaned_docs1,cleaned_docs2,cleaned_docs3,cleaned_docs4,chunk_size=1000, chunk_overlap=200):
@@ -131,20 +132,20 @@ def clean_and_chunk(file_path1,file_path2,file_path3,file_path4):
 
     
 # file_path3 = r"D:\Amex-Assignment\documents\Sample-Nonprofit-Financial-Policies-and-Procedures-Manual-Resource.pdf"
-file_path4 = r"D:\Amex-Assignment\documents\sample_fin_mgmt_policy.pdf"
-docs = parse_pdf(file_path4)
-cleaned_docs = []
-for doc in docs:
-    cleaned_docs.append(Document(page_content=clean_text4(doc.page_content), metadata=doc.metadata))
-print(cleaned_docs[2])
+# file_path4 = r"D:\Amex-Assignment\documents\sample_fin_mgmt_policy.pdf"
+# docs = parse_pdf(file_path4)
+# cleaned_docs = []
+# for doc in docs:
+#     cleaned_docs.append(Document(page_content=clean_text4(doc.page_content), metadata=doc.metadata))
+# print(cleaned_docs[2])
 
-splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=200,
-        separators=["\n\n", "\n", ".", " ", ""]
-    )
-chunks1 = splitter.split_documents([cleaned_docs[2]])
-print("----------------------")
-for i, chunk in enumerate(chunks1):
-    print(f"\n--- Chunk {i+1} ---")
-    print(chunk.page_content)
+# splitter = RecursiveCharacterTextSplitter(
+#         chunk_size=1000,
+#         chunk_overlap=200,
+#         separators=["\n\n", "\n", ".", " ", ""]
+#     )
+# chunks1 = splitter.split_documents([cleaned_docs[2]])
+# print("----------------------")
+# for i, chunk in enumerate(chunks1):
+#     print(f"\n--- Chunk {i+1} ---")
+#     print(chunk.page_content)
