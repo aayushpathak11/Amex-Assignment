@@ -2,7 +2,9 @@ from ingestion import parse_pdf
 import re
 from langchain.docstore.document import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-
+import os,sys
+sys.path.insert(0, os.path.abspath(os.path.join(__file__, "..", "..", "src")))
+from config import CHUNK_SIZE,CHUNK_OVERLAP
 
 def clean_text1(text):
     lines = text.split("\n")
@@ -97,7 +99,7 @@ def cleaning(file_path1,file_path2,file_path3,file_path4):
         cleaned_docs4.append(Document(page_content=clean_text4(doc.page_content), metadata=doc.metadata))
     return cleaned_docs1,cleaned_docs2,cleaned_docs3,cleaned_docs4
 
-def chunking(cleaned_docs1,cleaned_docs2,cleaned_docs3,cleaned_docs4,chunk_size=1000, chunk_overlap=200):
+def chunking(cleaned_docs1,cleaned_docs2,cleaned_docs3,cleaned_docs4,chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP):
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
