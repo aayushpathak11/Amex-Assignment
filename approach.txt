@@ -1,0 +1,49 @@
+step 1 - ingestion 
+    - Loading and parsing the text from pdf using langchain pypdf loader
+    - Since all the pdf have only textual information as seen after manually examining the data files, a text based parsing would be sufficient. No need to go for multi modal parsing of images/tables.
+    - following langchain doc for this link - https://python.langchain.com/docs/integrations/document_loaders/pypdfloader/
+    - after parsing, did some analysis on parsed text, to help in cleaning and pre processing
+    - repeated the above steps for all the PDF Documents
+
+step 2 - preprocessing
+    - Cleaning each file's content using regex filter as identified by step 1
+    - Now since this is a one time process, we can use this approach of analysing the data and then cleaning it using rule-based approach as that would help me in getting better results in later stages.
+    - This rule based cleaning is important , and since it is one time ingestion process, we can apply this approach, as better and more cleaned the data better the results of later RAG pipeline.
+    - applied chunking recursive character text splitter using langchain, tried different configurations of chunk sizes and overlap
+    - as the documents were purely text based, no special chunking was tried, i tried charactertextsplitter and recursivecharatertextsplitter
+    - https://python.langchain.com/docs/concepts/text_splitters/
+    - future changes - passing file paths as list for more robustness
+    - After chunking it was noticed, that during retrieval , the title page chunk and content page were coming, which led to less meaningful context being retrieved, hence I trimmed the title and context pages in this step
+
+
+step 3 - embeddings
+    - Two different vector stores with different embeddings were created and tried
+    - Firstly Created using bge embedding model, but wasnt satisfied with results so created another with e5 embedding model
+    - This was done on trial basis
+    - Followed https://python.langchain.com/api_reference/huggingface/embeddings/langchain_huggingface.embeddings.huggingface.HuggingFaceEmbeddings.html
+
+* THE ABOVE 3 STEPS ARE ONE TIME INGESTION PROCESS TO CLEAN DATA AND CREATE VECTORSTORE ON FAISS AND ARE NOT USED AGAIN IN FURTHER PIPELINE
+
+step 4 - retriever
+    - Was not satisfied with only retrieved contexts, hence used crossencoder reranker model (bge-reranker-base) from huggingface for filtering out only highly relevant chunks
+    - results after applying reranker are good both with bge vectorstore and as well as e5 vectorstore
+    - Since we need to try different approaches , i gave an option to select the vectorstore (bge or e5) and number of chunks dynamically
+
+step 5 - generation
+    - Was trying to use open source huggingface llms like qwen2.5-3B and mistral models but wasnt getting good results
+    - Used Google gemini-2.0-flash for generation (free credits) https://python.langchain.com/api_reference/google_genai/chat_models/langchain_google_genai.chat_models.ChatGoogleGenerativeAI.html
+
+Miscellaneous points - 
+    - Studied about evaluation metrices of RAG Application
+    - came across RAGAS and Deepeval frameworks https://docs.ragas.io/en/latest/getstarted/rag_eval/
+    - Tried both but both of them required openai api key for working, tried to look out for workaround but couldnt find any in given timeframe
+    - So took help of chatgpt to calculate our own metrics of answer relvancy and context relevancy using cosine similarity and used it as a reference for checking the quality of contexts and answers
+    - also checked groundedness of the answer with chunks, to verify that it is not a hallucinated answer
+
+Future Scope - 
+    - Currently the ingestion process is written to be one time logic, as every file has its own individual cleaning steps. This is done for just this task, for future scaling we can modify the ingestion pipeline to be universal and more robust
+    - Evaluation frameworks like RAGAS/Deepeval can be implemented
+    - More retrieval methods can also be tried for more in depth control and analysis
+
+
+    

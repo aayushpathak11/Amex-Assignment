@@ -12,14 +12,19 @@ from utils import log_answer
 st.set_page_config(page_title="RAG Chatbot", layout="wide")
 st.title("FINANCE RAG Chatbot")
 
+# option to select vectorstore
 vectorstore_option = st.sidebar.selectbox(
     "Select Vectorstore for Retrieval : ",
     options=VECTORSTORE_OPTIONS,
 )
+
+#option to select number of chunks
 top_k_option = st.sidebar.selectbox(
     "Select Number of Chunks : ",
     options=TOP_K,
 )
+
+#option to select number of reranked chunks
 top_n_option = st.sidebar.selectbox(
     "Select Number of Chunks after reranking: ",
     options=TOP_N,
@@ -40,10 +45,10 @@ if user_input := st.chat_input("Ask a question about your documents…"):
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    chunks = retrieve_context(user_input,choice=vectorstore_option,top_k=top_k_option,top_n=top_n_option)
-
-    log_answer(user_input,chunks,answer,vectorstore_option,top_k_option,top_n_option)
-    scores = evaluate_rag_output(user_input, answer, chunks)
+    chunks = retrieve_context(user_input,choice=vectorstore_option,top_k=top_k_option,top_n=top_n_option) # retrieving chunks using appropriate configurations
+    answer = answer_with_gemini(user_input,chunks) # generating answer
+    log_answer(user_input,chunks,answer,vectorstore_option,top_k_option,top_n_option) # logging results
+    scores = evaluate_rag_output(user_input, answer, chunks) #evaluating scores
 
     st.session_state.history.append({"role": "assistant", "content": answer})
     with st.chat_message("assistant"):

@@ -29,3 +29,6 @@ TOP_N = [3,5,8,10]
 LOG_FILE_BASE = (BASE_DIR.parent / "output").resolve()
 SAMPLE_LOG_FILE = LOG_FILE_BASE/"query_results.json"
 EXAMPLE_LOG_FILE = LOG_FILE_BASE/"example_retrieval_logs.json"
+
+VECTORSTORE_BGE_PATH = (BASE_DIR.parent / "faiss_index_bge").resolve()
+VECTORSTORE_E5_PATH = (BASE_DIR.parent / "faiss_index_e5").resolve()

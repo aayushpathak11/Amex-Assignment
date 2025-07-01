@@ -1,3 +1,5 @@
+# ONE TIME PROCESS, TOOK THE PDF , PARSED THEM , CLEANED THEM , MADE CHUNKS , MADE EMBEDDINGS, STORED IN VECTORSTORE
+
 from langchain_huggingface import HuggingFaceEmbeddings
 from preprocessing import clean_and_chunk
 from langchain_community.vectorstores import FAISS

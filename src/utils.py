@@ -5,6 +5,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(__file__, "..", "..", "src")))
 from config import (EXAMPLE_LOG_FILE)
 
 def log_answer(question, chunks, answer,vectorstore_option,top_k_option,top_n_option):
+    # function responsible for logging the results in appropriate log files
 
     entry = {
         "question": question,

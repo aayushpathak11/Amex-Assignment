@@ -1,3 +1,4 @@
+# USED JUPYTER NOTEBOOK TO ANALYSE WHAT NEEDS TO BE CLEANED
 from ingestion import parse_pdf
 import re
 from langchain.docstore.document import Document
@@ -7,6 +8,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(__file__, "..", "..", "src")))
 from config import CHUNK_SIZE,CHUNK_OVERLAP
 
 def clean_text1(text):
+    # CLEANING LOGIC FOR PDF 1
     lines = text.split("\n")
     cleaned_lines = []
 
@@ -17,34 +19,36 @@ def clean_text1(text):
         if stripped in ("FINANCIAL POLICIES", "Lake County G overnment"):
             continue
 
-        # Remove lines that are only page numbers (like "1", "2", etc.)
+
         if re.fullmatch(r"\d+", stripped):
             continue
 
-        cleaned_lines.append(line)  # Keep original line (not stripped)
+        cleaned_lines.append(line) 
 
     return "\n".join(cleaned_lines)
 def clean_text2(text):
+    # CLEANING LOGIC FOR PDF 2
     lines = text.split("\n")
     cleaned_lines = []
 
     for line in lines:
         stripped = line.strip()
 
-        # Remove variations of header/footer (case-insensitive)
+
         if stripped.lower() == "financial policies":
             continue
 
-        # Remove "X | Page" or "Page X" type patterns
+
         if re.fullmatch(r"\d+\s*\|\s*Page", stripped, re.IGNORECASE):
             continue
         if re.fullmatch(r"Page\s+\d+", stripped, re.IGNORECASE):
             continue
 
-        cleaned_lines.append(line)  # Keep original formatting
+        cleaned_lines.append(line)  
 
     return "\n".join(cleaned_lines)
 def clean_text3(text):
+    # CLEANING LOGIC FOR PDF 3
     lines = text.split("\n")
     cleaned_lines = []
 
@@ -59,16 +63,17 @@ def clean_text3(text):
         if re.fullmatch(r"\d+", stripped):
             continue
 
-        cleaned_lines.append(line)  # Keep original formatting
+        cleaned_lines.append(line)  
     return "\n".join(cleaned_lines)
 def clean_text4(text):
+    # CLEANING LOGIC FOR PDF 4
     lines = text.split("\n")
     cleaned_lines = []
 
     for line in lines:
         stripped = line.strip()
 
-        # Remove "Page | X" footer
+        # Removing "Page | X" footer
         if re.fullmatch(r"Page\s*\|\s*\d+", stripped, re.IGNORECASE):
             continue
 
@@ -76,7 +81,7 @@ def clean_text4(text):
         if stripped == "May 3, 2016 DRAFT – Pending HUD Legal Counsel Review":
             continue
 
-        cleaned_lines.append(line)  # Keep original formatting
+        cleaned_lines.append(line)  
 
     return "\n".join(cleaned_lines)
 
@@ -115,39 +120,5 @@ def clean_and_chunk(file_path1,file_path2,file_path3,file_path4):
     chunks1,chunks2,chunks3,chunks4 = chunking(cleaned_docs1,cleaned_docs2,cleaned_docs3,cleaned_docs4)
     return chunks1,chunks2,chunks3,chunks4
 
-# file_path1 = r"D:\Amex-Assignment\documents\Financial Policies (PDF).pdf"
-# docs = parse_pdf(file_path1)
-# cleaned_docs = []
-# for doc in docs:
-#     cleaned_docs.append(Document(page_content=clean_text1(doc.page_content), metadata=doc.metadata))
-# print(cleaned_docs[0])
 
-
-# file_path2 = r"D:\Amex-Assignment\documents\a_2.1_financial_policy_manual_lubbock_chamber_of_commerce_11.19.pdf"
-# docs = parse_pdf(file_path2)
-# cleaned_docs = []
-# for doc in docs:
-#     cleaned_docs.append(Document(page_content=clean_text2(doc.page_content), metadata=doc.metadata))
-# print(cleaned_docs[2])
-
-
-
-    
-# file_path3 = r"D:\Amex-Assignment\documents\Sample-Nonprofit-Financial-Policies-and-Procedures-Manual-Resource.pdf"
-# file_path4 = r"D:\Amex-Assignment\documents\sample_fin_mgmt_policy.pdf"
-# docs = parse_pdf(file_path4)
-# cleaned_docs = []
-# for doc in docs:
-#     cleaned_docs.append(Document(page_content=clean_text4(doc.page_content), metadata=doc.metadata))
-# print(cleaned_docs[2])
-
-# splitter = RecursiveCharacterTextSplitter(
-#         chunk_size=1000,
-#         chunk_overlap=200,
-#         separators=["\n\n", "\n", ".", " ", ""]
-#     )
-# chunks1 = splitter.split_documents([cleaned_docs[2]])
-# print("----------------------")
-# for i, chunk in enumerate(chunks1):
-#     print(f"\n--- Chunk {i+1} ---")
-#     print(chunk.page_content)
+# USED JUPYTER NOTEBOOK TO ANALYSE WHAT NEEDS TO BE CLEANED

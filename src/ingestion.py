@@ -5,6 +5,10 @@ def parse_pdf(pdf_path):
     docs = loader.load()
     return docs
 
+
+# BELOW CODE IS FOR UNDERSTANDING THE LOGIC THAT I USED TO PARSE AND CLEAN DATA AND HENCE IS COMMENTED OUT
+
+
 # file_path1 = r"D:\Amex-Assignment\documents\Financial Policies (PDF).pdf"
 
 # loader = PyPDFLoader(file_path1)
@@ -52,7 +56,10 @@ def parse_pdf(pdf_path):
 # equipment, major maintenance, and associated expenses of less than $100,000. Major renovation or
 # maintenance projects will be identified in the LRP.' metadata={'producer': 'Adobe PDF Library 23.1.206', 'creator': 'Acrobat PDFMaker 23 for Word', 'creationdate': '2023-06-12T16:09:08-06:00', 'author': 'Hanna Waugh', 'comments': '', 'company': '', 'keywords': '', 'moddate': '2023-06-12T16:09:10-06:00', 'sourcemodified': '', 'subject': '', 'title': '', 'source': 'D:\\Amex-Assignment\\documents\\Financial Policies (PDF).pdf', 'total_pages': 17, 'page': 0, 'page_label': '1'}
 # """
-# # Fnding 1 - On analysing more document objects , we can observe that page_content has a fixed header repeating in every page's content, this can be cleaned
+
+# # FINDING 1 - On analysing more document objects , we can observe that page_content has a fixed header repeating in every page's content, this can be cleaned
+
+
 
 # #---------------Parsing 2nd PDF-------------
 
@@ -100,9 +107,12 @@ def parse_pdf(pdf_path):
 # by the President, such as, the authority to make spending decisions within the parameters of
 # the approved department or program budget.' metadata={'producer': 'Adobe Acrobat Pro DC 19.12.20035', 'creator': 'Adobe Acrobat Pro DC 19.12.20035', 'creationdate': '2019-07-01T08:36:17-05:00', 'author': 'Sheri Nugent', 'moddate': '2020-05-04T08:30:04-04:00', 'title': 'Financial Policies & Procedures Handbook', 'source': 'D:\\Amex-Assignment\\documents\\a_2.1_financial_policy_manual_lubbock_chamber_of_commerce_11.19.pdf', 'total_pages': 20, 'page': 3, 'page_label': '4'}
 # """
-# # Finding 2 - This pdf also has fixed header and footer pattern in each page's content and hence can be cleaned for better clear data
 
-# #---------------Parsing 2nd PDF-------------
+# # FINDING 2 - This pdf also has fixed header and footer pattern in each page's content and hence can be cleaned for better clear data
+
+
+
+# #---------------Parsing 3RD PDF-------------
 
 # file_path3 = r"D:\Amex-Assignment\documents\Sample-Nonprofit-Financial-Policies-and-Procedures-Manual-Resource.pdf"
 # loader3 = PyPDFLoader(file_path3)
@@ -145,4 +155,4 @@ def parse_pdf(pdf_path):
 # 6) The administrative assistant will maintain financial records in accordance with the
 # record retention policy or as determined by Federal, State or local law.' metadata={'producer': 'Adobe PDF Library 11.0', 'creator': 'Acrobat PDFMaker 11 for Word', 'creationdate': '2019-08-30T09:43:36-04:00', 'author': 'Jim Simpson', 'company': '', 'keywords': '', 'lcid': '1033', 'moddate': '2019-08-30T09:43:43-04:00', 'sourcemodified': 'D:20190830133955', 'subject': '', 'title': 'Sample Nonprofit Financial Policies and Procedures Manual', 'usedefaultlanguage': '1', 'version': '99022200', 'source': 'D:\\Amex-Assignment\\documents\\Sample-Nonprofit-Financial-Policies-and-Procedures-Manual-Resource.pdf', 'total_pages': 23, 'page': 2, 'page_label': '3'}
 # """
-# # Finding 3 - This pdf also has fixed header and footer pattern in each page's content and hence can be cleaned for better clear data
+# # FINDING 3 - This pdf also has fixed header and footer pattern in each page's content and hence can be cleaned for better clear data

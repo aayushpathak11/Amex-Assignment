@@ -6,16 +6,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 from dotenv import load_dotenv
 load_dotenv()
 
-
 os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
-
 
 embedding_model = HuggingFaceEmbeddings(
     model_name="intfloat/e5-large-v2",
     model_kwargs={"device": "cpu"},
     encode_kwargs={"normalize_embeddings": True}
 )
-
 
 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0)
 
@@ -28,12 +25,8 @@ def evaluate_rag_output(question, answer, contexts):
     context_text = " ".join(contexts)
     context_embedding = embedding_model.embed_query(context_text)
     question_embedding = embedding_model.embed_query(question)
-
-
-    context_similarity = cosine_similarity([answer_embedding], [context_embedding])[0][0]
-
-    answer_relevance = cosine_similarity([question_embedding], [answer_embedding])[0][0]
-
+    context_similarity = cosine_similarity([answer_embedding], [context_embedding])[0][0] # Calculating similarity between answer generated and context retrieved, basically how close both are
+    answer_relevance = cosine_similarity([question_embedding], [answer_embedding])[0][0] # Calculating similarity between question asked and answer generated, basically is answer related to question or not
 
     prompt = (
         "Given the context and the answer, rate the faithfulness of the answer to the context "
@@ -44,7 +37,7 @@ def evaluate_rag_output(question, answer, contexts):
     )
     try:
         response = llm.invoke(prompt).content.strip()
-        faithfulness = float(response)
+        faithfulness = float(response) # checking the groundedness of answer among chunks retrieved, basically testing whether it is grounded answer or hallucinated one
     except (ValueError, AttributeError):
         faithfulness = 0.0  
 
