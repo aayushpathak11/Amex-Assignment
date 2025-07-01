@@ -4,6 +4,7 @@
 ![architecture](https://github.com/user-attachments/assets/3fbb59e2-7e25-4417-a061-979ae86c05c2)
 
 ## Some Points
+- I have deployed the app for ease of use - https://amex-assignment-financerag.streamlit.app/
 - Detailed steps and logical approach is explained in approach.txt
 - Have used open source embedding models bge-base-en and e5-large-v2 for embeddings
 - Have used FAISS as a vector store
