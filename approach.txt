@@ -4,6 +4,7 @@ step 1 - ingestion
     - following langchain doc for this link - https://python.langchain.com/docs/integrations/document_loaders/pypdfloader/
     - after parsing, did some analysis on parsed text, to help in cleaning and pre processing
     - repeated the above steps for all the PDF Documents
+    - used ingestion.ipynb (jupyter notebook in src) to analyse the pdf document structure and to trim it (title and content pages).
 
 step 2 - preprocessing
     - Cleaning each file's content using regex filter as identified by step 1
@@ -13,7 +14,7 @@ step 2 - preprocessing
     - as the documents were purely text based, no special chunking was tried, i tried charactertextsplitter and recursivecharatertextsplitter
     - https://python.langchain.com/docs/concepts/text_splitters/
     - future changes - passing file paths as list for more robustness
-    - After chunking it was noticed, that during retrieval , the title page chunk and content page were coming, which led to less meaningful context being retrieved, hence I trimmed the title and context pages in this step
+    - After chunking it was noticed, that during retrieval , the title page chunk and content page were coming, which led to less meaningful context being retrieved, hence I trimmed the title and context pages in this step using ingestion.ipynb as a one time process of the pipeline
 
 
 step 3 - embeddings
