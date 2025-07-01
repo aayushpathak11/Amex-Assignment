@@ -25,3 +25,7 @@ VECTORSTORE_OPTIONS = [
 
 TOP_K = [5,10,15,20]
 TOP_N = [3,5,8,10]
+
+LOG_FILE_BASE = (BASE_DIR.parent / "output").resolve()
+SAMPLE_LOG_FILE = LOG_FILE_BASE/"query_results.json"
+EXAMPLE_LOG_FILE = LOG_FILE_BASE/"example_retrieval_logs.json"

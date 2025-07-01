@@ -1,16 +1,16 @@
 import streamlit as st
 import os, sys
 from pathlib import Path
-
 import os,sys
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, "..", "..", "src")))
-
 from retriever import retrieve_context
 from generation import answer_with_gemini
 from evaluation import evaluate_rag_output
 from config import VECTORSTORE_OPTIONS,TOP_K,TOP_N
-st.set_page_config(page_title="🧠 RAG Chatbot", layout="wide")
-st.title("🧠 FINANCE RAG Chatbot")
+from utils import log_answer
+
+st.set_page_config(page_title="RAG Chatbot", layout="wide")
+st.title("FINANCE RAG Chatbot")
 
 vectorstore_option = st.sidebar.selectbox(
     "Select Vectorstore for Retrieval : ",
@@ -34,19 +34,17 @@ for entry in st.session_state.history:
     with st.chat_message(entry["role"]):
         st.markdown(entry["content"])
 
-# Input widget at bottom
+
 if user_input := st.chat_input("Ask a question about your documents…"): 
-    # Log user message
     st.session_state.history.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # # Retrieve context (optional debug)
     chunks = retrieve_context(user_input,choice=vectorstore_option,top_k=top_k_option,top_n=top_n_option)
-    # Generate answer
-    answer = answer_with_gemini(user_input,chunks)
+
+    log_answer(user_input,chunks,answer,vectorstore_option,top_k_option,top_n_option)
     scores = evaluate_rag_output(user_input, answer, chunks)
-    # Add assistant response
+
     st.session_state.history.append({"role": "assistant", "content": answer})
     with st.chat_message("assistant"):
         col1, col2 = st.columns([3, 1]) 
@@ -62,7 +60,5 @@ if user_input := st.chat_input("Ask a question about your documents…"):
                 with st.expander(f"Chunk {i+1}"):
                     st.write(chunk)
 
-
-# Add a clear chat button in the sidebar
 if st.sidebar.button("⚙️ Clear Chat"):
     st.session_state.history.clear()
